@@ -33,6 +33,7 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get("code");
   const error = searchParams.get("error");
   const cook = await cookies();
+  const origin = request.nextUrl.origin;
 
   if (!code && !error) {
     const csrfState = Math.random().toString(36).substring(2);
@@ -151,8 +152,9 @@ export async function GET(request: NextRequest) {
       console.error("Database connection save error:", dbError);
       return NextResponse.redirect(`https://d6xfx6ln-3000.euw.devtunnels.ms/`);
     }
+    console.log("SUCCESS");
 
-    return NextResponse.redirect(`https://d6xfx6ln-3000.euw.devtunnels.ms/`);
+    return NextResponse.redirect(process.env.APP_DEFAULT_URL || origin);
   } catch (err) {
     console.error("Server side TikTok Auth Error:", err);
     return NextResponse.redirect(`${origin}/login?error=Server+auth+failed`);

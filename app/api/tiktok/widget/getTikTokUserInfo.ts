@@ -6,6 +6,7 @@ import { validateToken } from "./validateToken";
 import { ApiError } from "@/lib/ApiError";
 import { requestUserInfo } from "./requestUserInfo";
 import { requestUserVideos } from "./requestUserVideos";
+import { toBase64 } from "@/utils/toBase64";
 
 export async function getTikTokUserInfo(
   id: string = "28298d1f-8e5a-492f-8833-5b74a6293228",
@@ -59,8 +60,13 @@ export async function getTikTokUserInfo(
     requestUserVideos(access_token),
   ]);
 
+  const base64Avatar = await toBase64(userData.user.avatar_large_url);
+
   const result: IWidget = {
-    user: userData.user,
+    user: {
+      ...userData.user,
+      avatar_large_url: base64Avatar,
+    },
     videos: [...videoData.videos, ...premade],
   };
 

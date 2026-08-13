@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { createClientServer } from "utils/supabase/server";
+import { createClientServer } from "@/utils/supabase/server";
 
 export interface TikTokTokenResponse {
   access_token: string;

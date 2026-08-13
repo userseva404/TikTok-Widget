@@ -1,9 +1,9 @@
 "use server";
 
-import { createClientServer } from "utils/supabase/server";
+import { createClientServer } from "@/utils/supabase/server";
 import { ITikTokVideo, IWidget } from "../data/route";
 import { validateToken } from "./validateToken";
-import { ApiError } from "lib/ApiError";
+import { ApiError } from "@/lib/ApiError";
 import { requestUserInfo } from "./requestUserInfo";
 import { requestUserVideos } from "./requestUserVideos";
 

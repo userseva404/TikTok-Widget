@@ -1,4 +1,4 @@
-import { TWidgets, widgetsApi } from "lib/widgets";
+import { TWidgets, widgetsApi } from "@/lib/widgets";
 
 export class WidgetsService {
   static getWidgetData = (connect: TWidgets) => {

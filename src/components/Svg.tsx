@@ -47,7 +47,9 @@ export function Svg({
     >
       <foreignObject width={svgW} height={svgH} id="tiktokMain">
         <div
-          xmlns="http://www.w3.org/1999/xhtml"
+          {...({
+            xmlns: "http://www.w3.org/1999/xhtml",
+          } as React.HTMLAttributes<HTMLDivElement>)}
           style={{ width: "100%", height: "100%" }}
         >
           {children}

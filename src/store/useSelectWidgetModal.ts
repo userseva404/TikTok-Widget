@@ -1,4 +1,3 @@
-import { TWidgets } from "types";
 import { create } from "zustand";
 
 interface TSelectWidgetModal {

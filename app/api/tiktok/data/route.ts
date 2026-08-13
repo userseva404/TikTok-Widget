@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { IWidgetParams } from "@/components/Widget";
 import { getTikTokUserInfo } from "../widget/getTikTokUserInfo";
+import { ApiError } from "@/lib/ApiError";
 
 export type TiktokUserInfoParams =
   | "avatar_large_url"
@@ -98,8 +99,12 @@ export async function GET(request: NextRequest) {
     const res = await getTikTokUserInfo(id);
     return NextResponse.json(res);
   } catch (error) {
-    const status = error.status || 500;
-    const message = error.message || "An unexpected error occurred";
+    let status = 500;
+    let message = "An unexpected error occurred";
+    if (error instanceof ApiError) {
+      status = error.status;
+      message = error.message;
+    }
     return NextResponse.json({ message }, { status });
   }
 }

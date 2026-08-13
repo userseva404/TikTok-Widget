@@ -1,7 +1,7 @@
 import { Svg } from "../Svg";
 import { Widget } from "../Widget";
 import { IWidget } from "../../../app/api/tiktok/data/route";
-import { useTikTokWidgetParams } from "store/useTikTokWidgetParams";
+import { useTikTokWidgetParams } from "@/store/useTikTokWidgetParams";
 
 interface Props {
   data: IWidget;

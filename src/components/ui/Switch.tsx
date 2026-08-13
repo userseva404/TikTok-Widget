@@ -1,6 +1,6 @@
 import * as RSwitch from "@radix-ui/react-switch";
 import { forwardRef } from "react";
-import { cn } from "utils/cn";
+import { cn } from "@/utils/cn";
 
 interface Props extends Omit<RSwitch.SwitchProps, "value" | "onChange"> {
   className?: string;

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "providers/ThemeProvider";
-import { ModalProvider } from "providers/ModalProvider";
+import { ThemeProvider } from "@/providers/ThemeProvider";
+import { ModalProvider } from "@/providers/ModalProvider";
 import { ToastContainer } from "react-toastify";
 
 const nunitoFont = Nunito({

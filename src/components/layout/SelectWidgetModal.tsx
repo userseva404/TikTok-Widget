@@ -1,12 +1,12 @@
 "use client";
 
-import { useSelectWidgetModal } from "store/useSelectWidgetModal";
+import { useSelectWidgetModal } from "@/store/useSelectWidgetModal";
 import { Modal } from "./Modal";
 import { WidgetCard } from "../features/WidgetCard";
-import { TWidgets } from "lib/widgets";
-import { useSelectWidget } from "store/useSelectWidget";
+import { TWidgets } from "@/lib/widgets";
+import { useSelectWidget } from "@/store/useSelectWidget";
 import { useEffect, useState } from "react";
-import { cn } from "utils/cn";
+import { cn } from "@/utils/cn";
 
 interface TWidgetCard {
   connect: TWidgets;

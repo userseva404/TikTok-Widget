@@ -1,4 +1,4 @@
-import { cn } from "utils/cn";
+import { cn } from "@/utils/cn";
 import { Palette } from "lucide-react";
 import Link from "next/link";
 

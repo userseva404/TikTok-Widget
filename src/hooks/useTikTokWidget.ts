@@ -1,7 +1,7 @@
-import { fetcher } from "lib/fetcher";
-import { TWidgets } from "lib/widgets";
+import { fetcher } from "@/lib/fetcher";
+import { TWidgets } from "@/lib/widgets";
 import { toast } from "react-toastify";
-import { WidgetsService } from "services/WidgetsService";
+import { WidgetsService } from "@/services/WidgetsService";
 import useSWR, { mutate } from "swr";
 
 export const useTikTokWidgetData = (connect: TWidgets | null) => {

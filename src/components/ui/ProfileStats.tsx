@@ -1,4 +1,4 @@
-import { formatNumber } from "utils/formatNumber";
+import { formatNumber } from "@/utils/formatNumber";
 
 interface Props {
   following_count: number;

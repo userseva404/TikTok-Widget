@@ -1,6 +1,6 @@
 "use server";
 
-import { TConnection } from "types";
+import { TConnection } from "@/types";
 import { TikTokTokenResponse } from "../callback/route";
 
 export async function validateToken(connection: TConnection) {

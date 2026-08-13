@@ -1,6 +1,6 @@
 "use client";
 
-import { TWidgets } from "lib/widgets";
+import { TWidgets } from "@/lib/widgets";
 import { TikTokConfiguration } from "./TikTokConfiguration";
 
 interface IWidgetsConfiguration {

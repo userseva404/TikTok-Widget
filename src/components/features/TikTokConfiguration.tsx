@@ -2,7 +2,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useDebounce } from "use-debounce";
 import { IWidgetParams } from "../Widget";
 import { Switch } from "../ui/Switch";
-import { useTikTokWidgetParams } from "store/useTikTokWidgetParams";
+import { useTikTokWidgetParams } from "@/store/useTikTokWidgetParams";
 import { useCallback, useEffect } from "react";
 
 export function TikTokConfiguration() {

@@ -1,7 +1,9 @@
+type IconProps = React.SVGProps<SVGSVGElement>;
+
 const navbar = [
   {
     name: "Home",
-    Icon: (props) => (
+    Icon: (props: IconProps) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 -960 960 960"
@@ -13,7 +15,7 @@ const navbar = [
   },
   {
     name: "Friends",
-    Icon: (props) => (
+    Icon: (props: IconProps) => (
       <svg
         {...props}
         xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +32,7 @@ const navbar = [
   },
   {
     name: "Inbox",
-    Icon: (props) => (
+    Icon: (props: IconProps) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         {...props}
@@ -42,7 +44,7 @@ const navbar = [
   },
   {
     name: "Profile",
-    Icon: (props) => (
+    Icon: (props: IconProps) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         {...props}
@@ -60,7 +62,7 @@ export function Navbar() {
       {navbar.map(({ name, Icon, type }) => {
         return (
           <div key={name} data-active={name === "Profile" ? "active" : ""}>
-            <Icon className={type !== "special" && "icon"} />
+            <Icon className={type !== "special" ? "icon" : ""} />
             {name && <span>{name}</span>}
           </div>
         );

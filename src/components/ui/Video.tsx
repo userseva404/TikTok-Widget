@@ -1,4 +1,4 @@
-import { formatNumber } from "utils/formatNumber";
+import { formatNumber } from "@/utils/formatNumber";
 import { ITikTokVideo } from "../../../app/api/tiktok/data/route";
 
 interface Props {
@@ -15,7 +15,7 @@ export function Video({ video }: Props) {
         src={video.cover_image_url}
         alt=""
         onError={(e) => {
-          e.target.src =
+          e.currentTarget.src =
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4r2E-r6Zrlo57l5IyJ11YFj9KYzFq68uy91X9gA1O0Q&s=10";
         }}
       />

@@ -1,11 +1,11 @@
 "use client";
 
-import { useTikTokWidgetData } from "hooks/useTikTokWidget";
-import { useSelectWidget } from "store/useSelectWidget";
+import { useTikTokWidgetData } from "@/hooks/useTikTokWidget";
+import { useSelectWidget } from "@/store/useSelectWidget";
 import { TikTokPreview } from "./TikTokPreview";
-import { TWidgets } from "lib/widgets";
+import { TWidgets } from "@/lib/widgets";
 import { IWidget } from "../../../app/api/tiktok/data/route";
-import { useSelectWidgetModal } from "store/useSelectWidgetModal";
+import { useSelectWidgetModal } from "@/store/useSelectWidgetModal";
 import { useEffect } from "react";
 
 interface IWidgetsPreview {

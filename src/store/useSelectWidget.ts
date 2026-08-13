@@ -1,4 +1,4 @@
-import { TWidgets } from "lib/widgets";
+import { TWidgets } from "@/lib/widgets";
 import { create } from "zustand";
 
 interface TSelectWidget {

@@ -1,26 +1,72 @@
+@import "../src/style/fonts.css";
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme="dark"] {
+  --background: #121212;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --color-border: #444444;
+  --accent: #888888;
+  --primary-color: #00cd1b;
+  --card: #1a1a1a;
+  --primary-hover: #b0b0b0;
+  --primary-text: #121212;
+  --secondary: #2a2a2a;
+  --secondary-hover: #333333;
+  --secondary-text: #e0e0e0;
+  --input: #121212;
+  --ring: #00cd1b;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  font-family: "Nunito";
 }
+
+@theme inline {
+  --color-background: var(--background);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border: var(--color-border);
+  --color-accent: var(--accent);
+  --color-primary: var(--primary-color);
+  --color-card: var(--card);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-text: var(--primary-text);
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-text: var(--secondary-text);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-tiktok: "TikTok Sans", sans-serif;
+  --font-nunito: "Nunito", sans-serif;
+}
+
+@layer base {
+  a,
+  button {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+}
+
+@utility acc-* {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: calc(--value([*]) * -1);
+    inset: calc(--value(integer) * -1px);
+  }
+}
+
+@custom-variant interact (&:hover, &:focus-visible, &:active);

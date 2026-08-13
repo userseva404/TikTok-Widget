@@ -8,6 +8,7 @@ export async function toBase64(url: string): Promise<string> {
           "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.9",
       },
+      method: "GET",
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

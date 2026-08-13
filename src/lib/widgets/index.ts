@@ -10,8 +10,8 @@ type IWidgetApi = Record<TWidgets, Provider>;
 
 export const widgetsApi: IWidgetApi = {
   tiktok: {
-    widgetDataApi: "https://d6xfx6ln-3000.euw.devtunnels.ms/api/tiktok/data",
-    widgetApi: "https://d6xfx6ln-3000.euw.devtunnels.ms/api/tiktok/widget",
+    widgetDataApi: "https://chimerical-stroopwafel-101dd2.netlify.app/api/tiktok/data", // hard code
+    widgetApi: "https://chimerical-stroopwafel-101dd2.netlify.app/api/tiktok/widget", // hard code
     supabaseProviderName: "tik_tok",
     name: "Tik Tok",
   },

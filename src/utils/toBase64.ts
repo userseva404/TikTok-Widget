@@ -4,13 +4,11 @@ export async function toBase64(url: string): Promise<string> {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const blob = await response.blob();
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.onerror = () => reject(new Error("Failed to read blob"));
-      reader.readAsDataURL(blob);
-    });
+    const arrayBuffer = await response.arrayBuffer();
+    const base64String = Buffer.from(arrayBuffer).toString("base64");
+    const contentType = response.headers.get("content-type");
+    const dataUrl = `data:${contentType};base64,${base64String}`;
+    return dataUrl;
   } catch (error) {
     console.error("Failed to convert image:", error);
     throw error;

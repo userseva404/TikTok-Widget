@@ -104,6 +104,8 @@ export async function GET(request: NextRequest) {
     if (error instanceof ApiError) {
       status = error.status;
       message = error.message;
+    } else if (error instanceof Error) {
+      message = error.message;
     }
     return NextResponse.json({ message }, { status });
   }

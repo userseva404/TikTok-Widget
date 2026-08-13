@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         "Content-Type": "image/svg+xml",
-        "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+        "Cache-Control": "public, max-age=0, stale-while-revalidate=0",
       },
     });
   } catch (error) {

@@ -11,6 +11,8 @@ export async function toBase64(url: string): Promise<string> {
       method: "GET",
     });
     if (!response.ok) {
+      console.log(response);
+
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const arrayBuffer = await response.arrayBuffer();

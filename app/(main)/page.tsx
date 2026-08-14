@@ -4,6 +4,7 @@ import { PageSection } from "@/components/layout/PageSection";
 import { HomeText } from "@/components/ui/HomeText";
 import { HomeWidgetPreview } from "@/components/features/HomeWidgetPreview";
 import { HomeWidgetConfiguration } from "@/components/features/HomeWidgetConfiguration";
+import { HomeWidgetURL } from "@/components/features/HomeWidgetURL";
 
 export default function Home() {
   return (
@@ -11,6 +12,9 @@ export default function Home() {
       <HomeText />
       <PageSection icon={Settings} title="Configuration">
         <HomeWidgetConfiguration />
+      </PageSection>
+      <PageSection icon={Settings} title="Widget url">
+        <HomeWidgetURL />
       </PageSection>
       <PageSection icon={Eye} title="Preview">
         <HomeWidgetPreview />

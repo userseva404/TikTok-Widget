@@ -1,12 +1,15 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { useDebounce } from "use-debounce";
+
 import { IWidgetParams } from "../Widget";
 import { Switch } from "../ui/Switch";
-import { useTikTokWidgetParams } from "@/store/useTikTokWidgetParams";
+
 import { useCallback, useEffect } from "react";
+import { useWidgetParams } from "@/store/useTikTokWidgetParams";
 
 export function TikTokConfiguration() {
-  const { params, setParams } = useTikTokWidgetParams();
+  const { getByClient, setParams } = useWidgetParams();
+
+  const params = getByClient("tiktok");
 
   const {
     register,
@@ -19,7 +22,7 @@ export function TikTokConfiguration() {
   });
 
   const onSubmit: SubmitHandler<IWidgetParams> = useCallback((data) => {
-    setParams(data);
+    setParams("tiktok", data);
   }, []);
 
   useEffect(() => {

@@ -45,8 +45,7 @@ export async function updateSession(request: NextRequest) {
   const user = data?.claims;
 
   if (request.nextUrl.pathname.includes("widget")) {
-    const url = request.nextUrl.clone();
-    return NextResponse.redirect(url);
+    return supabaseResponse;
   }
 
   if (!user && !request.nextUrl.pathname.startsWith("/auth")) {

@@ -1,15 +1,17 @@
 "use server";
 
 import { createClientServer } from "@/utils/supabase/server";
-import { ITikTokVideo, IWidget } from "../data/route";
+import { ITikTokUserInfo, ITikTokVideo, IWidget } from "../data/route";
 import { validateToken } from "./validateToken";
 import { ApiError } from "@/lib/ApiError";
 import { requestUserInfo } from "./requestUserInfo";
 import { requestUserVideos } from "./requestUserVideos";
 import { toBase64 } from "@/utils/toBase64";
+import { IWidgetParams } from "@/components/Widget";
 
 export async function getTikTokUserInfo(
   id: string = "28298d1f-8e5a-492f-8833-5b74a6293228",
+  params: IWidgetParams,
 ): Promise<IWidget | undefined> {
   const client = await createClientServer();
 
@@ -55,19 +57,37 @@ export async function getTikTokUserInfo(
 
   // User here
 
-  const [userData, videoData] = await Promise.all([
-    requestUserInfo(access_token),
-    requestUserVideos(access_token),
+  const userInfoWithImg = async (): Promise<ITikTokUserInfo> => {
+    const { user } = await requestUserInfo(access_token);
+    const base64Avatar = await toBase64(user.avatar_large_url);
+    return {
+      ...user,
+      avatar_large_url: base64Avatar,
+    };
+  };
+
+  const videoInfoWithImg = async (): Promise<ITikTokVideo[]> => {
+    const { videos } = await requestUserVideos(access_token);
+    const base64Videos = await Promise.all(
+      [...videos, ...premade].map(async (video) => {
+        const img = await toBase64(video.cover_image_url);
+        return {
+          ...video,
+          cover_image_url: img,
+        };
+      }),
+    );
+    return base64Videos;
+  };
+
+  const [user, videos] = await Promise.all([
+    userInfoWithImg(),
+    videoInfoWithImg(),
   ]);
 
-  const base64Avatar = await toBase64(userData.user.avatar_large_url);
-
   const result: IWidget = {
-    user: {
-      ...userData.user,
-      avatar_large_url: base64Avatar,
-    },
-    videos: [...videoData.videos, ...premade],
+    user: user,
+    videos: [...videos],
   };
 
   return result;
@@ -88,7 +108,7 @@ const one: ITikTokVideo = {
   title:
     "#1 #блоксфрутс #bloxfruits #onepiecefan #ванпіс #фрукт #fruit #топодин #топ #one #рекомендації #рек #славаукраїні #длятебе #foryou #роблокс #roblox #anime #аніме ",
   cover_image_url:
-    "https://p16-common-sign.tiktokcdn.com/tos-maliva-p-0068/16a68cf91a1e4892b1aa727437785901~tplv-tiktokx-cropcenter-q:300:400:q70.webp?dr=14782&refresh_token=f8b9eb8e&x-expires=1785592800&x-signature=PqkTzIcackXCQp4UH%2BlGJpSTbQo%3D&t=bacd0480&ps=933b5bde&shp=d05b14bd&shcp=8aecc5ac&idc=my2&biz_tag=tt_video&s=TIKTOK_FOR_DEVELOPER&sc=cover",
+    "https://img.redbull.com/images/c_crop,x_1015,y_0,h_1320,w_990/c_fill,w_450,h_600/q_auto,f_auto/redbullcom/2025/8/11/dcusojkfgapu4zxe3gtb/minecraft-landscape",
   width: 300,
   height: 400,
 };

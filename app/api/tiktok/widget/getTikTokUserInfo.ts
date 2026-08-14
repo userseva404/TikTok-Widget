@@ -108,7 +108,7 @@ const one: ITikTokVideo = {
   title:
     "#1 #блоксфрутс #bloxfruits #onepiecefan #ванпіс #фрукт #fruit #топодин #топ #one #рекомендації #рек #славаукраїні #длятебе #foryou #роблокс #roblox #anime #аніме ",
   cover_image_url:
-    "https://img.redbull.com/images/c_crop,x_1015,y_0,h_1320,w_990/c_fill,w_450,h_600/q_auto,f_auto/redbullcom/2025/8/11/dcusojkfgapu4zxe3gtb/minecraft-landscape",
+    "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/d96bb958-4e6c-4ce0-9447-fbe226fbbecf/dh4kldk-b088ecb8-c7b4-41ce-a752-d84d36c03f80.jpg/v1/fill/w_1192,h_670,q_70,strp/kung_fu_panda_4_po___live_wallpaper_for_pc_by_favorisxp_dh4kldk-pre.jpg",
   width: 300,
   height: 400,
 };

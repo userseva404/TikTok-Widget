@@ -8,7 +8,7 @@ interface Provider {
 }
 type IWidgetApi = Record<TWidgets, Provider>;
 
-const DEVELOP = false;
+const DEVELOP = true;
 
 export const widgetsApi: IWidgetApi = {
   tiktok: {

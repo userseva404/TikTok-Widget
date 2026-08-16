@@ -13,7 +13,8 @@ export type TiktokUserInfoParams =
   | "follower_count"
   | "following_count"
   | "likes_count"
-  | "video_count";
+  | "video_count"
+  | "avatar_url";
 export type TiktokUserVideoParams =
   | "id"
   | "create_time"
@@ -33,6 +34,7 @@ export type TiktokUserVideoParams =
 
 export interface ITikTokUserInfo {
   avatar_large_url: string;
+  avatar_url: string;
   display_name: string;
   bio_description: string;
   profile_deep_link: string;
@@ -47,8 +49,6 @@ export interface ITikTokUserInfo {
 export interface ITikTokVideo {
   cover_image_url: string;
   duration: number;
-  embed_html: string;
-  embed_link: string;
   id: string;
   like_count: number;
   share_count: number;

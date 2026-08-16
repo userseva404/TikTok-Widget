@@ -4,8 +4,6 @@ export async function requestUserVideos(access_token: string) {
   const videoQueryParams: TiktokUserVideoParams[] = [
     "cover_image_url",
     "duration",
-    "embed_html",
-    "embed_link",
     "id",
     "like_count",
     "share_count",
@@ -28,6 +26,9 @@ export async function requestUserVideos(access_token: string) {
         Authorization: `Bearer ${access_token}`,
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        max_count: 9,
+      }),
     },
   );
 

@@ -12,6 +12,7 @@ export async function requestUserInfo(access_token: string) {
     "following_count",
     "likes_count",
     "video_count",
+    "avatar_url"
   ];
 
   const queryParamsStr = new URLSearchParams({

@@ -12,11 +12,9 @@ const DEVELOP = process.env.DEVELOP === "true";
 
 const ORIGIN = process.env.NEXT_PUBLIC_ORIGIN_URL + "/api";
 
-console.log("ORIGIN", ORIGIN);
-
 const tikTokApi: Omit<Provider, "supabaseProviderName" | "name"> = {
   widgetDataApi: `${ORIGIN}/tiktok/data`,
-  widgetApi: ORIGIN + "tiktok/widget",
+  widgetApi:  `${ORIGIN}/tiktok/widget`,
 };
 
 export const widgetsApi: IWidgetApi = {

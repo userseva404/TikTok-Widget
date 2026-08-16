@@ -8,16 +8,21 @@ interface Provider {
 }
 type IWidgetApi = Record<TWidgets, Provider>;
 
-const DEVELOP = false;
+const DEVELOP = process.env.DEVELOP === "true";
+
+const ORIGIN = process.env.NEXT_PUBLIC_ORIGIN_URL + "/api";
+
+console.log("ORIGIN", ORIGIN);
+
+const tikTokApi: Omit<Provider, "supabaseProviderName" | "name"> = {
+  widgetDataApi: `${ORIGIN}/tiktok/data`,
+  widgetApi: ORIGIN + "tiktok/widget",
+};
 
 export const widgetsApi: IWidgetApi = {
   tiktok: {
-    widgetDataApi: DEVELOP
-      ? "https://d6xfx6ln-3000.euw.devtunnels.ms/api/tiktok/data/"
-      : "https://tik-tok-widget-three.vercel.app/api/tiktok/data/", // hard code
-    widgetApi: DEVELOP
-      ? "https://d6xfx6ln-3000.euw.devtunnels.ms/api/tiktok/widget/"
-      : "https://tik-tok-widget-three.vercel.app/api/tiktok/widget/", // hard code
+    widgetDataApi: tikTokApi.widgetDataApi,
+    widgetApi: tikTokApi.widgetApi,
     supabaseProviderName: "tik_tok",
     name: "Tik Tok",
   },

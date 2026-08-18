@@ -8,7 +8,7 @@ import { HomeWidgetURL } from "@/components/features/HomeWidgetURL";
 
 export default function Home() {
   return (
-    <Container className="flex flex-col gap-10 pt-5">
+    <Container className="flex flex-col pt-5">
       <HomeText />
       <PageSection icon={Settings} title="Configuration">
         <HomeWidgetConfiguration />

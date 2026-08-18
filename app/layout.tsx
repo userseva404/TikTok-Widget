@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { ModalProvider } from "@/providers/ModalProvider";
 import { ToastContainer } from "react-toastify";
+import { UserProvider } from "@/hooks/useUser";
+
 
 const nunitoFont = Nunito({
   subsets: ["latin"],
@@ -23,11 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${nunitoFont.variable} h-full antialiased`}>
       <body className="min-h-full">
-        <ThemeProvider>
-          <ModalProvider />
-          <ToastContainer />
-          <main className="min-h-dvh">{children}</main>
-        </ThemeProvider>
+        <UserProvider>
+          <ThemeProvider>
+            <ModalProvider />
+            <ToastContainer />
+            <main className="min-h-dvh">{children}</main>
+          </ThemeProvider>
+        </UserProvider>
       </body>
     </html>
   );

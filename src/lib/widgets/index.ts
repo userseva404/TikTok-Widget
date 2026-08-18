@@ -1,6 +1,7 @@
 export type TWidgets = "tiktok";
 
 interface Provider {
+  callback: string;
   widgetDataApi: string;
   widgetApi: string;
   supabaseProviderName: string;
@@ -14,13 +15,15 @@ const ORIGIN = process.env.NEXT_PUBLIC_ORIGIN_URL + "/api";
 
 const tikTokApi: Omit<Provider, "supabaseProviderName" | "name"> = {
   widgetDataApi: `${ORIGIN}/tiktok/data`,
-  widgetApi:  `${ORIGIN}/tiktok/widget`,
+  widgetApi: `${ORIGIN}/tiktok/widget`,
+  callback: `${ORIGIN}/tiktok/callback`,
 };
 
 export const widgetsApi: IWidgetApi = {
   tiktok: {
     widgetDataApi: tikTokApi.widgetDataApi,
     widgetApi: tikTokApi.widgetApi,
+    callback: tikTokApi.callback,
     supabaseProviderName: "tik_tok",
     name: "Tik Tok",
   },

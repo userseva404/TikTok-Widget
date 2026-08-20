@@ -7,11 +7,12 @@ import { UserInfo } from "./ui/UserInfo";
 import { ProfileStats } from "./ui/ProfileStats";
 import { WidgetContainer } from "./layout/WidgetContainer";
 
+export type TTikTokVersions = "default" | "small";
 export interface IWidgetParams {
   stats?: boolean;
   description?: boolean;
   videoPartAnim?: boolean;
-  small?: boolean;
+  small?: TTikTokVersions;
 }
 
 interface Props extends IWidget {
@@ -32,7 +33,7 @@ export function Widget({ user, videos, params }: Props) {
   const {
     stats = false,
     description = false,
-    small = false,
+    small = "default",
     videoPartAnim = false,
   } = params;
 
@@ -58,7 +59,7 @@ export function Widget({ user, videos, params }: Props) {
           </div>
         </section>
       </WidgetContainer>
-      {!small && (
+      {small === "default" && (
         <>
           <WidgetVideoPart videos={videos} videoPartAnim={videoPartAnim} />
           <Navbar />

@@ -5,7 +5,7 @@ import { getSvg } from "./getSvg";
 import { getTikTokUserInfo } from "./getTikTokUserInfo";
 import { IWidget } from "../data/route";
 import { ApiError } from "@/lib/ApiError";
-import { IWidgetParams } from "@/components/Widget";
+import { IWidgetParams, TTikTokVersions } from "@/components/Widget";
 
 interface RouteParams extends IWidgetParams {
   id?: string;
@@ -33,7 +33,9 @@ export async function GET(request: NextRequest) {
           ? parseBool(rawParams.videoPartAnim)
           : undefined,
       small:
-        rawParams.small !== undefined ? parseBool(rawParams.small) : undefined,
+        rawParams.small !== undefined
+          ? (rawParams.small as TTikTokVersions)
+          : "default",
     };
 
     const { id } = params;

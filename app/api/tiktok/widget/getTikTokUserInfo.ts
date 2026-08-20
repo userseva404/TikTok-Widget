@@ -10,7 +10,7 @@ import { toBase64 } from "@/utils/toBase64";
 import { IWidgetParams } from "@/components/Widget";
 
 export async function getTikTokUserInfo(
-  id: string = "28298d1f-8e5a-492f-8833-5b74a6293228",
+  id: string = "b51e2b33-a9fb-4796-b956-2905771875cf",
   params: IWidgetParams,
 ): Promise<IWidget | undefined> {
   const client = await createClientServer();

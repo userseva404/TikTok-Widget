@@ -35,7 +35,7 @@ export function HomeWidgetPreview() {
   const showLoading = widget && (isLoading || (isValidating && !data));
 
   return (
-    <div className="flex relative mt-5 justify-center min-h-[300px] items-center py-5 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]">
+    <div className="flex relative justify-center min-h-[300px] items-center py-5 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]">
       {!widget && <NoWidget />}
 
       {showLoading && <Loading />}

@@ -29,7 +29,7 @@ function ProfileConnectionsContent() {
     return <p>Error happened while fetching connections</p>;
   }
 
-  if (!bdConnections || bdConnections.length === 0) {
+  if (bdConnections === undefined) {
     return <p>No connections found.</p>;
   }
 

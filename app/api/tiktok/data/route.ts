@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
     const params = Object.fromEntries(
       request.nextUrl.searchParams,
     ) as RouteParams;
-    const { id = "28298d1f-8e5a-492f-8833-5b74a6293228" } = params;
+    const { id = "b51e2b33-a9fb-4796-b956-2905771875cf" } = params;
 
     if (!id) {
       return;

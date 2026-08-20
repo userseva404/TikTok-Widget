@@ -7,7 +7,7 @@ export function ProfileUser() {
   }
 
   return (
-    <div className="flex justify-evenly gap-x-4 gap-y-2 wrap">
+    <div key={user.email} className="flex justify-evenly gap-x-4 gap-y-2 wrap">
       <ProfileInfo title="User id:">{user.id}</ProfileInfo>
       <ProfileInfo title="Email:">{user.email}</ProfileInfo>
     </div>

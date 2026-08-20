@@ -2,19 +2,32 @@
 
 import { TWidgets } from "@/lib/widgets";
 import { TikTokConfiguration } from "./TikTokConfiguration";
+import { useSelectWidget } from "@/store/useSelectWidget";
 
-interface IWidgetsConfiguration {
-  connect: TWidgets;
-  Component: React.ReactNode;
-}
+type IWidgetsConfiguration = {
+  [K in TWidgets]: React.ReactElement;
+};
 
 const widgetsConfiguration: IWidgetsConfiguration = {
-  connect: "tiktok",
-  Component: <TikTokConfiguration />,
+  tiktok: <TikTokConfiguration />,
 };
 
 export function HomeWidgetConfiguration() {
-  const ConfigurationComponent = widgetsConfiguration.Component;
+  return (
+    <div className="bg-secondary p-2 px-4 rounded-xl">
+      <HomeWidgetConfigurationContent />
+    </div>
+  );
+}
 
-  return <> {ConfigurationComponent}</>;
+export function HomeWidgetConfigurationContent() {
+  const { widget } = useSelectWidget();
+
+  if (!widget) {
+    return <p className="text-[1.25rem]">Select widget to configure</p>;
+  }
+
+  const ConfigurationComponent = widgetsConfiguration[widget];
+
+  return <>{ConfigurationComponent}</>;
 }

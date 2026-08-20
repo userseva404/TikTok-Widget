@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { ApiError } from "../ApiError";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -42,10 +43,18 @@ export async function updateSession(request: NextRequest) {
   // with the Supabase client, your users may be randomly logged out.
   const { data } = await supabase.auth.getClaims();
 
+  const userData = await supabase.auth.getUser();
+
   const user = data?.claims;
+
+  const isVerified = !!userData.data.user?.email_confirmed_at;
 
   if (request.nextUrl.pathname.includes("widget")) {
     return supabaseResponse;
+  }
+
+  if (!isVerified && request.nextUrl.pathname.includes("callback")) {
+    throw new ApiError("Forbidden", 403);
   }
 
   if (!user && !request.nextUrl.pathname.startsWith("/auth")) {

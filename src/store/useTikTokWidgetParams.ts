@@ -27,7 +27,7 @@ export const useWidgetParams = create<WidgetStore>((set, get) => {
       tiktok: {
         params: {
           description: false,
-          small: false,
+          small: "default",
           stats: false,
           videoPartAnim: false,
         },

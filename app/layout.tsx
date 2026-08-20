@@ -5,7 +5,8 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import { ModalProvider } from "@/providers/ModalProvider";
 import { ToastContainer } from "react-toastify";
 import { UserProvider } from "@/hooks/useUser";
-
+import { SupabaseErrorCatch } from "@/providers/SupabaseErrorCatch";
+import { Suspense } from "react";
 
 const nunitoFont = Nunito({
   subsets: ["latin"],
@@ -27,6 +28,9 @@ export default function RootLayout({
       <body className="min-h-full">
         <UserProvider>
           <ThemeProvider>
+            <Suspense fallback={null}>
+              <SupabaseErrorCatch />
+            </Suspense>
             <ModalProvider />
             <ToastContainer />
             <main className="min-h-dvh">{children}</main>

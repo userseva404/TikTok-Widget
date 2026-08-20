@@ -33,7 +33,7 @@ export function Svg({
     return resultH;
   };
   const svgW = 886;
-  const svgH = params.small ? calculateSvgSmallH(smallH) : fullH;
+  const svgH = params.small === "small" ? calculateSvgSmallH(smallH) : fullH;
 
   return (
     <svg

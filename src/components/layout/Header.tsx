@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Logo } from "../ui/Logo";
 import { Container } from "./Container";
 import { User } from "lucide-react";
+import { LogOutBtn } from "../features/LogOutBtn";
 
 export function Header() {
   return (
@@ -9,9 +10,15 @@ export function Header() {
       <Container>
         <div className="flex justify-between items-center">
           <Logo className="text-[clamp(1.5rem,1.286rem+1.071vw,2.25rem)]" />
-          <Link href={"/profile"} className="interact:bg-primary-hover/15 interact:border interact:border-border p-2 rounded-xl">
-            <User className="size-7 stroke-text-primary" strokeWidth={2.5} />
-          </Link>
+          <div className="flex gap-2">
+            <Link
+              href={"/profile"}
+              className="stroke-text-primary interact:bg-primary-hover/15 border border-transparent interact:border-border p-2 rounded-xl"
+            >
+              <User size={28} />
+            </Link>
+            <LogOutBtn />
+          </div>
         </div>
       </Container>
     </header>

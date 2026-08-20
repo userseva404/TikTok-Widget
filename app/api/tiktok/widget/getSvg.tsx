@@ -14,7 +14,7 @@ export async function getSvg(widget: IWidget, params: IWidgetParams) {
   const {
     stats = false,
     description = false,
-    small = false,
+    small = "default",
     videoPartAnim = false,
   } = params;
   const safeParams = {

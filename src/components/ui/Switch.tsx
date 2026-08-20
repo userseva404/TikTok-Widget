@@ -16,7 +16,7 @@ export const Switch = forwardRef<HTMLButtonElement, Props>(
         checked={value}
         onCheckedChange={onChange}
         className={cn(
-          "bg-secondary min-w-[48px] min-h-[24px] relative rounded-full transition-colors data-[state=checked]:bg-primary-text",
+          "bg-card min-w-[48px] min-h-[24px] relative rounded-full transition-colors data-[state=checked]:bg-primary-text disabled:opacity-70",
           className,
         )}
         {...props}

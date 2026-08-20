@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
     });
 
     const url = `https://www.tiktok.com/v2/auth/authorize/?${params.toString()}`;
-    return redirect(url);
+    return Response.json({ url: url }, { status: 200 });
   }
 
   const returnedState = searchParams.get("state");
@@ -127,7 +127,7 @@ export async function GET(request: NextRequest) {
       console.error(
         "No active session. User must be logged in to connect TikTok.",
       );
-      return NextResponse.redirect(`${origin}/auth?error=Please+log+in+first`);
+      return NextResponse.redirect(process.env.APP_DEFAULT_URL || origin);
     }
     const invalid_at_ms = Date.now() + tokenData.refresh_expires_in * 1000;
     const invalid_at = new Date(invalid_at_ms).toISOString();
@@ -150,13 +150,13 @@ export async function GET(request: NextRequest) {
 
     if (dbError) {
       console.error("Database connection save error:", dbError);
-      return NextResponse.redirect(`https://d6xfx6ln-3000.euw.devtunnels.ms/`);
+      return NextResponse.redirect(process.env.APP_DEFAULT_URL || origin);
     }
     console.log("SUCCESS");
 
     return NextResponse.redirect(process.env.APP_DEFAULT_URL || origin);
   } catch (err) {
     console.error("Server side TikTok Auth Error:", err);
-    return NextResponse.redirect(`${origin}/login?error=Server+auth+failed`);
+    return NextResponse.redirect(process.env.APP_DEFAULT_URL || origin);
   }
 }

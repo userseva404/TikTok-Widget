@@ -1,4 +1,4 @@
-import { fetcher } from "@/lib/fetcher";
+import { fetcher, swrFetcher } from "@/lib/fetcher";
 import { cn } from "@/utils/cn";
 import { CircleCheck } from "lucide-react";
 import Link from "next/link";
@@ -19,9 +19,7 @@ export function ConnectionCard({
   return (
     <button
       onClick={async () => {
-        const response = await fetcher(href);
-        console.log("RESPONSE", response);
-
+        const response = await swrFetcher(href);
         if (response && response.url) {
           window.location.href = response.url;
         }

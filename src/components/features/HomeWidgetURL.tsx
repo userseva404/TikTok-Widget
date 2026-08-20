@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/hooks/useUser";
 import { widgetsApi } from "@/lib/widgets";
 import { useSelectWidget } from "@/store/useSelectWidget";
 import { useWidgetParams } from "@/store/useTikTokWidgetParams";
@@ -8,9 +9,9 @@ import { toast } from "react-toastify";
 export function HomeWidgetURL() {
   const { widget } = useSelectWidget();
   const { getByClient } = useWidgetParams();
-
+  const { user } = useUser();
   const innerTxt = (() => {
-    if (!widget) {
+    if (!widget || !user) {
       return "No widget selected";
     }
     const params = getByClient(widget);
@@ -21,7 +22,10 @@ export function HomeWidgetURL() {
         .filter(([_, value]) => value !== undefined)
         .map(([key, value]) => [key, String(value)]),
     );
-    const parmsTxt = new URLSearchParams(cleanParams).toString();
+    const parmsTxt = new URLSearchParams({
+      id: user.id,
+      ...cleanParams,
+    }).toString();
     return `${pureURL}?${parmsTxt}`;
   })();
 

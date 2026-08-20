@@ -48,7 +48,8 @@ export async function GET(request: NextRequest) {
       client_key: process.env.TIK_TOK_CLIENT_KEY || "",
       scope: "user.info.basic,user.info.profile,user.info.stats,video.list",
       response_type: "code",
-      redirect_uri: process.env.TIK_TOK_REDIRECT_URI || "",
+      redirect_uri:
+        process.env.NEXT_PUBLIC_ORIGIN_URL + "/api/tiktok/callback" || "",
       state: csrfState,
     });
 
@@ -84,7 +85,8 @@ export async function GET(request: NextRequest) {
           client_secret: process.env.TIK_TOK_CLIENT_SECRET || "",
           code: code,
           grant_type: "authorization_code",
-          redirect_uri: process.env.TIK_TOK_REDIRECT_URI || "",
+          redirect_uri:
+            process.env.NEXT_PUBLIC_ORIGIN_URL + "/api/tiktok/callback" || "",
         }).toString(),
       },
     );
@@ -127,7 +129,9 @@ export async function GET(request: NextRequest) {
       console.error(
         "No active session. User must be logged in to connect TikTok.",
       );
-      return NextResponse.redirect(process.env.APP_DEFAULT_URL || origin);
+      return NextResponse.redirect(
+        process.env.NEXT_PUBLIC_ORIGIN_URL || origin,
+      );
     }
     const invalid_at_ms = Date.now() + tokenData.refresh_expires_in * 1000;
     const invalid_at = new Date(invalid_at_ms).toISOString();
@@ -150,13 +154,14 @@ export async function GET(request: NextRequest) {
 
     if (dbError) {
       console.error("Database connection save error:", dbError);
-      return NextResponse.redirect(process.env.APP_DEFAULT_URL || origin);
+      return NextResponse.redirect(
+        process.env.NEXT_PUBLIC_ORIGIN_URL || origin,
+      );
     }
-    console.log("SUCCESS");
 
-    return NextResponse.redirect(process.env.APP_DEFAULT_URL || origin);
+    return NextResponse.redirect(process.env.NEXT_PUBLIC_ORIGIN_URL || origin);
   } catch (err) {
     console.error("Server side TikTok Auth Error:", err);
-    return NextResponse.redirect(process.env.APP_DEFAULT_URL || origin);
+    return NextResponse.redirect(process.env.NEXT_PUBLIC_ORIGIN_URL || origin);
   }
 }

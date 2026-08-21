@@ -36,11 +36,12 @@ export async function GET(request: NextRequest) {
   const origin = request.nextUrl.origin;
 
   if (!code && !error) {
-    const csrfState = Math.random().toString(36).substring(2);
+    const csrfState = crypto.randomUUID();
 
     cook.set("csrfState", csrfState, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       maxAge: 160,
     });
 

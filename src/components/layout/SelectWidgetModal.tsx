@@ -43,43 +43,45 @@ export function SelectWidgetModal() {
       description="Widget selection modal"
       hideDesc
     >
-      <div className="grid grid-cols-3 py-5">
-        {widgetCards.map((widget) => {
-          return (
-            <WidgetCard
-              key={widget.connect}
-              className={cn(
-                "",
-                localWidget === widget.connect && "border-primary",
-              )}
-              onClick={() => {
-                handleSelect(widget.connect);
-              }}
-            >
-              {widget.name}
-            </WidgetCard>
-          );
-        })}
-      </div>
-      <div className="flex justify-end gap-5">
-        <Button
-          variant={"secondary"}
-          onClick={() => {
-            setLocalWidget(widget);
-            setOpen(false);
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant={"primary"}
-          onClick={() => {
-            setWidget(localWidget);
-            setOpen(false);
-          }}
-        >
-          Select
-        </Button>
+      <div className="grid grid-rows-[1fr_auto] h-full">
+        <div className="grid grid-cols-3 py-7 h-fit ">
+          {widgetCards.map((widget) => {
+            return (
+              <WidgetCard
+                key={widget.connect}
+                className={cn(
+                  "",
+                  localWidget === widget.connect && "border-primary",
+                )}
+                onClick={() => {
+                  handleSelect(widget.connect);
+                }}
+              >
+                {widget.name}
+              </WidgetCard>
+            );
+          })}
+        </div>
+        <div className="flex justify-end gap-5">
+          <Button
+            variant={"secondary"}
+            onClick={() => {
+              setLocalWidget(widget);
+              setOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant={"primary"}
+            onClick={() => {
+              setWidget(localWidget);
+              setOpen(false);
+            }}
+          >
+            Select
+          </Button>
+        </div>
       </div>
     </Modal>
   );

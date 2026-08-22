@@ -47,13 +47,18 @@ export function Modal({
             w-full
             max-w-full
             h-full
-            p-2
+            sm:p-7
             sm:max-h-[75svh]
             sm:h-fit
             sm:max-w-[clamp(600px,65dvw,800px)]
+            z-1000
+            py-20
+            px-7
+            grid
+            grid-rows-[auto_1fr]
             `}
         >
-          <div className="text-center text-[clamp(1.25rem,1.179rem+0.357vw,1.5rem)] px-8">
+          <div className="text-center text-[1.5rem] px-8">
             <TitleComp>
               <Dialog.Title className="text-[1em]">{title}</Dialog.Title>
             </TitleComp>
@@ -65,7 +70,11 @@ export function Modal({
           </div>
           <div>{children}</div>
           <Dialog.Close asChild>
-            <Button variant={"hollow"} size={"icon"} className="absolute right-2 top-2 acc-10">
+            <Button
+              variant={"hollow"}
+              size={"icon"}
+              className="absolute right-2 top-2 acc-10"
+            >
               <X className="size-8" />
             </Button>
           </Dialog.Close>

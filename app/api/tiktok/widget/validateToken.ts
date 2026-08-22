@@ -2,6 +2,7 @@
 
 import { TConnection } from "@/types";
 import { TikTokTokenResponse } from "../callback/route";
+import { ApiError } from "@/lib/ApiError";
 
 export async function validateToken(connection: TConnection) {
   const tokenResponse = await fetch(
@@ -20,6 +21,10 @@ export async function validateToken(connection: TConnection) {
       }).toString(),
     },
   );
+
+  if (!tokenResponse.ok) {
+    throw new ApiError("Token revalidation error", 500);
+  }
 
   const tokenData = (await tokenResponse.json()) as TikTokTokenResponse;
 

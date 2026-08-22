@@ -17,37 +17,40 @@ export type Database = {
       connections: {
         Row: {
           access_expires_in: number
+          access_invalid_at: string
           access_token: string
           api_id: string
           created_at: string
           id: string
-          invalid_at: string
           provider: string
           refresh_expires_in: number
+          refresh_invalid_at: string
           refresh_token: string
           user_id: string
         }
         Insert: {
           access_expires_in: number
+          access_invalid_at: string
           access_token: string
           api_id: string
           created_at?: string
           id?: string
-          invalid_at: string
           provider: string
           refresh_expires_in: number
+          refresh_invalid_at: string
           refresh_token: string
           user_id?: string
         }
         Update: {
           access_expires_in?: number
+          access_invalid_at?: string
           access_token?: string
           api_id?: string
           created_at?: string
           id?: string
-          invalid_at?: string
           provider?: string
           refresh_expires_in?: number
+          refresh_invalid_at?: string
           refresh_token?: string
           user_id?: string
         }

@@ -1,7 +1,7 @@
-import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createClientServer } from "@/utils/supabase/server";
+import { calcExpire } from "@/utils/calcExpire";
 
 export interface TikTokTokenResponse {
   access_token: string;
@@ -134,8 +134,9 @@ export async function GET(request: NextRequest) {
         process.env.NEXT_PUBLIC_ORIGIN_URL || origin,
       );
     }
-    const invalid_at_ms = Date.now() + tokenData.refresh_expires_in * 1000;
-    const invalid_at = new Date(invalid_at_ms).toISOString();
+
+    const refresh_invalid_at = calcExpire(tokenData.refresh_expires_in);
+    const access_invalid_at = calcExpire(tokenData.expires_in);
 
     const { error: dbError } = await client.from("connections").upsert(
       {
@@ -144,7 +145,8 @@ export async function GET(request: NextRequest) {
         refresh_token: tokenData.refresh_token,
         access_expires_in: tokenData.expires_in,
         refresh_expires_in: tokenData.refresh_expires_in,
-        invalid_at,
+        refresh_invalid_at: refresh_invalid_at,
+        access_invalid_at: access_invalid_at,
         provider: "tik_tok",
         api_id: open_id,
       },

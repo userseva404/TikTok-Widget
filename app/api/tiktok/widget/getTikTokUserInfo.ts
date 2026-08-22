@@ -8,6 +8,8 @@ import { requestUserInfo } from "./requestUserInfo";
 import { requestUserVideos } from "./requestUserVideos";
 import { toBase64 } from "@/utils/toBase64";
 import { IWidgetParams } from "@/components/Widget";
+import { calcExpire } from "@/utils/calcExpire";
+import { TikTokMock } from "@/utils/mock/TikTokMock";
 
 export async function getTikTokUserInfo(
   id: string = "b51e2b33-a9fb-4796-b956-2905771875cf",
@@ -34,25 +36,48 @@ export async function getTikTokUserInfo(
     throw new ApiError("TikTok access token is missing or expired", 401);
   }
 
-  const expires_at =
-    new Date(data.created_at).getTime() + data.access_expires_in * 1000;
+  const expires_at = data.access_invalid_at;
 
   let access_token = data.access_token;
+  const dateGap = new Date(Date.now() + 300000).toISOString();
 
-  if (Date.now() + 300000 > expires_at) {
+  if (new Date(dateGap).getTime() > new Date(expires_at).getTime()) {
+    if (
+      new Date(dateGap).getTime() > new Date(data.refresh_invalid_at).getTime()
+    ) {
+      const { error } = await client
+        .from("connections")
+        .delete()
+        .eq("provider", "tik_tok")
+        .eq("user_id", id);
+      if (error) {
+        throw new ApiError("Unable to delete invalid connection", 500);
+      }
+      throw new ApiError("Connection expired, please reconnect TikTok", 401);
+    }
     const tokenData = await validateToken(data);
+    if (!tokenData.access_token) {
+      throw new ApiError("Access token revalidation error", 500);
+    }
     access_token = tokenData.access_token;
-    await client
+    const refresh_invalid_at = calcExpire(tokenData.refresh_expires_in);
+    const access_invalid_at = calcExpire(tokenData.expires_in);
+    const { error } = await client
       .from("connections")
       .update({
         access_token: tokenData.access_token,
         refresh_token: tokenData.refresh_token,
-        created_at: `${Date.now()}`,
         refresh_expires_in: tokenData.refresh_expires_in,
         access_expires_in: tokenData.expires_in,
+        refresh_invalid_at,
+        access_invalid_at,
       })
       .eq("user_id", id)
       .eq("provider", "tik_tok");
+
+    if (error) {
+      throw new ApiError("Unable to update tokens", 500);
+    }
   }
 
   // User here
@@ -69,7 +94,7 @@ export async function getTikTokUserInfo(
   const videoInfoWithImg = async (): Promise<ITikTokVideo[]> => {
     const { videos } = await requestUserVideos(access_token);
     const base64Videos = await Promise.all(
-      [...videos, ...premade].map(async (video) => {
+      [...videos].map(async (video) => {
         const img = await toBase64(video.cover_image_url);
         return {
           ...video,
@@ -90,27 +115,9 @@ export async function getTikTokUserInfo(
     videos: [...videos],
   };
 
+  if (process.env.NODE_ENV === "development") {
+    result.videos = [...result.videos, ...TikTokMock.generateVideos()];
+  }
+
   return result;
 }
-
-const one: ITikTokVideo = {
-  share_count: 3,
-  view_count: 48134,
-  like_count: 2200,
-  duration: 66,
-  id: "7141376929814285573",
-  share_url:
-    "https://www.tiktok.com/@gromovick_/video/7141376929814285573?utm_campaign=tt4d_open_api&utm_source=sbawf13qub01myzqh6",
-  title:
-    "#1 #блоксфрутс #bloxfruits #onepiecefan #ванпіс #фрукт #fruit #топодин #топ #one #рекомендації #рек #славаукраїні #длятебе #foryou #роблокс #roblox #anime #аніме ",
-  cover_image_url:
-    "https://fastly.picsum.photos/id/403/300/400.jpg?hmac=Szm9yOaq-fxl0YqA8gt-jLNrWXa89WW6dYLizTV1k4k",
-  width: 300,
-  height: 400,
-};
-
-const premade = Array(10)
-  .fill(0)
-  .map(() => {
-    return one;
-  });

@@ -41,7 +41,10 @@ export async function GET(request: NextRequest) {
     const { data: alreadyConnected } = await client
       .from("connections")
       .select()
-      .eq("provider", "tik_tok");
+      .eq("provider", "tik_tok")
+      .maybeSingle();
+
+    console.log(alreadyConnected);
 
     if (alreadyConnected) {
       throw new ApiError(

@@ -1,11 +1,10 @@
 import { Container } from "@/components/layout/Container";
-import { Eye, Settings } from "lucide-react";
+import { Eye, Settings, Share2 } from "lucide-react";
 import { PageSection } from "@/components/layout/PageSection";
 import { HomeText } from "@/components/ui/HomeText";
 import { HomeWidgetPreview } from "@/components/features/HomeWidgetPreview";
 import { HomeWidgetConfiguration } from "@/components/features/HomeWidgetConfiguration";
 import { HomeWidgetURL } from "@/components/features/HomeWidgetURL";
-import { Select } from "@/components/ui/Select";
 
 export default function Home() {
   return (
@@ -14,7 +13,7 @@ export default function Home() {
       <PageSection icon={Settings} title="Configuration">
         <HomeWidgetConfiguration />
       </PageSection>
-      <PageSection icon={Settings} title="Widget url">
+      <PageSection icon={Share2} title="Widget url">
         <HomeWidgetURL />
       </PageSection>
       <PageSection icon={Eye} title="Preview">

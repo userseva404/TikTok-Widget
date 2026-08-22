@@ -1,4 +1,5 @@
 import { cn } from "@/utils/cn";
+import { Button } from "../ui/Button";
 
 interface Props extends React.ComponentProps<"button"> {
   className?: string;
@@ -7,14 +8,16 @@ interface Props extends React.ComponentProps<"button"> {
 
 export function WidgetCard({ className = "", children, ...props }: Props) {
   return (
-    <button
+    <Button
+      variant={"outline"}
+      size={"medium"}
       className={cn(
-        "bg-card border-2 border-border rounded-xl flex items-center justify-center p-2 interact:bg-secondary-hover/30",
+        "py-2",
         className,
       )}
       {...props}
     >
       {children}
-    </button>
+    </Button>
   );
 }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createClientServer } from "@/utils/supabase/server";
 import { calcExpire } from "@/utils/calcExpire";
+import { ApiError } from "@/lib/ApiError";
 
 export interface TikTokTokenResponse {
   access_token: string;
@@ -29,50 +30,63 @@ interface TikTokUserInfoResponse {
 }
 
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const code = searchParams.get("code");
-  const error = searchParams.get("error");
-  const cook = await cookies();
-  const origin = request.nextUrl.origin;
-
-  if (!code && !error) {
-    const csrfState = crypto.randomUUID();
-
-    cook.set("csrfState", csrfState, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 160,
-    });
-
-    const params = new URLSearchParams({
-      client_key: process.env.TIK_TOK_CLIENT_KEY || "",
-      scope: "user.info.basic,user.info.profile,user.info.stats,video.list",
-      response_type: "code",
-      redirect_uri:
-        process.env.NEXT_PUBLIC_ORIGIN_URL + "/api/tiktok/callback" || "",
-      state: csrfState,
-    });
-
-    const url = `https://www.tiktok.com/v2/auth/authorize/?${params.toString()}`;
-    return Response.json({ url: url }, { status: 200 });
-  }
-
-  const returnedState = searchParams.get("state");
-  const savedState = cook.get("csrfState")?.value;
-
-  if (returnedState !== savedState) {
-    return Response.json(
-      { error: "State mismatch / CSRF attack detected" },
-      { status: 400 },
-    );
-  }
-
-  if (!code) {
-    return;
-  }
-
   try {
+    const searchParams = request.nextUrl.searchParams;
+    const code = searchParams.get("code");
+    const error = searchParams.get("error");
+    const cook = await cookies();
+    const origin = request.nextUrl.origin;
+    const client = await createClientServer();
+
+    const { data: alreadyConnected } = await client
+      .from("connections")
+      .select()
+      .eq("provider", "tik_tok");
+
+    if (alreadyConnected) {
+      throw new ApiError(
+        "TikTok provider is already connected to your account",
+        401,
+      );
+    }
+
+    if (!code && !error) {
+      const csrfState = crypto.randomUUID();
+
+      cook.set("csrfState", csrfState, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 160,
+      });
+
+      const params = new URLSearchParams({
+        client_key: process.env.TIK_TOK_CLIENT_KEY || "",
+        scope: "user.info.basic,user.info.profile,user.info.stats,video.list",
+        response_type: "code",
+        redirect_uri:
+          process.env.NEXT_PUBLIC_ORIGIN_URL + "/api/tiktok/callback" || "",
+        state: csrfState,
+      });
+
+      const url = `https://www.tiktok.com/v2/auth/authorize/?${params.toString()}`;
+      return Response.json({ url: url }, { status: 200 });
+    }
+
+    const returnedState = searchParams.get("state");
+    const savedState = cook.get("csrfState")?.value;
+
+    if (returnedState !== savedState) {
+      return Response.json(
+        { error: "State mismatch / CSRF attack detected" },
+        { status: 400 },
+      );
+    }
+
+    if (!code) {
+      return;
+    }
+
     const tokenResponse = await fetch(
       "https://open.tiktokapis.com/v2/oauth/token/",
       {
@@ -120,7 +134,6 @@ export async function GET(request: NextRequest) {
 
     const { open_id } = userData.data.user;
 
-    const client = await createClientServer();
     const {
       data: { user },
       error: authError,
@@ -163,8 +176,15 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.redirect(process.env.NEXT_PUBLIC_ORIGIN_URL || origin);
-  } catch (err) {
-    console.error("Server side TikTok Auth Error:", err);
-    return NextResponse.redirect(process.env.NEXT_PUBLIC_ORIGIN_URL || origin);
+  } catch (error) {
+    let status = 500;
+    let message = "An unexpected error occurred";
+    if (error instanceof ApiError) {
+      status = error.status;
+      message = error.message;
+    } else if (error instanceof Error) {
+      message = error.message;
+    }
+    return NextResponse.json({ message }, { status });
   }
 }

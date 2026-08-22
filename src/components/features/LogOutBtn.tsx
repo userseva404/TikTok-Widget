@@ -1,9 +1,10 @@
-"use client"
+"use client";
 
 import { cn } from "@/utils/cn";
 import { createClientBrowser } from "@/utils/supabase/client";
 import { LogOut } from "lucide-react";
 import { toast } from "react-toastify";
+import { Button } from "../ui/Button";
 
 interface Props {
   className?: string;
@@ -20,14 +21,13 @@ export function LogOutBtn({ className = "" }: Props) {
   };
 
   return (
-    <button
+    <Button
+      variant={"hollow"}
+      size={"icon"}
       onClick={handleLogOUt}
-      className={cn(
-        "stroke-text-primary  interact:bg-primary-hover/15 border border-transparent interact:border-border p-2 rounded-xl",
-        className,
-      )}
+      className={cn(className)}
     >
       <LogOut size={28} />
-    </button>
+    </Button>
   );
 }

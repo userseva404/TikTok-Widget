@@ -16,8 +16,7 @@ describe("calcExpire", () => {
     vi.setSystemTime(date);
     expect(() => calcExpire(-10)).toThrow(Error);
   });
-  test("returns current time when expires_in is 0
-", () => {
+  test("Check if 0 is valid", () => {
     const startPoint = 100;
     const date = new Date(startPoint);
     vi.setSystemTime(date);

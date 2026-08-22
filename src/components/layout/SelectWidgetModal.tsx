@@ -7,6 +7,7 @@ import { TWidgets } from "@/lib/widgets";
 import { useSelectWidget } from "@/store/useSelectWidget";
 import { useEffect, useState } from "react";
 import { cn } from "@/utils/cn";
+import { Button } from "../ui/Button";
 
 interface TWidgetCard {
   connect: TWidgets;
@@ -42,7 +43,7 @@ export function SelectWidgetModal() {
       description="Widget selection modal"
       hideDesc
     >
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-3 py-5">
         {widgetCards.map((widget) => {
           return (
             <WidgetCard
@@ -60,23 +61,25 @@ export function SelectWidgetModal() {
           );
         })}
       </div>
-      <div className="flex justify-end">
-        <button
+      <div className="flex justify-end gap-5">
+        <Button
+          variant={"secondary"}
           onClick={() => {
             setLocalWidget(widget);
             setOpen(false);
           }}
         >
           Cancel
-        </button>
-        <button
+        </Button>
+        <Button
+          variant={"primary"}
           onClick={() => {
             setWidget(localWidget);
             setOpen(false);
           }}
         >
           Select
-        </button>
+        </Button>
       </div>
     </Modal>
   );

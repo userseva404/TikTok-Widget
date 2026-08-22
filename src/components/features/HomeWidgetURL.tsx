@@ -6,6 +6,7 @@ import { useSelectWidget } from "@/store/useSelectWidget";
 import { useWidgetParams } from "@/store/useTikTokWidgetParams";
 import { Copy } from "lucide-react";
 import { toast } from "react-toastify";
+import { Button } from "../ui/Button";
 export function HomeWidgetURL() {
   const { widget } = useSelectWidget();
   const { getByClient } = useWidgetParams();
@@ -41,12 +42,14 @@ export function HomeWidgetURL() {
   return (
     <div className="w-full bg-secondary p-2 px-4 rounded-xl grid grid-cols-[1fr_auto]">
       <p className="text-[1.25rem] truncate">{innerTxt}</p>
-      <button
-        className="stroke-accent interact:stroke-primary"
+      <Button
+        variant={"hollow"}
+        size={"none"}
+        className="stroke-accent interact:stroke-primary border-none bg-none"
         onClick={copyToClipboard}
       >
         <Copy className="stroke-inherit" />
-      </button>
+      </Button>
     </div>
   );
 }

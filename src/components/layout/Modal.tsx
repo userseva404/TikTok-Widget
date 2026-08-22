@@ -2,6 +2,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { X } from "lucide-react";
 import { Fragment, useMemo } from "react";
+import { Button } from "../ui/Button";
 
 interface Props {
   children?: React.ReactNode;
@@ -63,8 +64,10 @@ export function Modal({
             </DescComp>
           </div>
           <div>{children}</div>
-          <Dialog.Close className="absolute right-2 top-2 acc-10">
-            <X className="size-8" />
+          <Dialog.Close asChild>
+            <Button variant={"hollow"} size={"icon"} className="absolute right-2 top-2 acc-10">
+              <X className="size-8" />
+            </Button>
           </Dialog.Close>
         </Dialog.Content>
       </Dialog.Portal>

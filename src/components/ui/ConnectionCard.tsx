@@ -19,10 +19,12 @@ export function ConnectionCard({
   return (
     <button
       onClick={async () => {
-        const response = await swrFetcher(href);
-        if (response && response.url) {
-          window.location.href = response.url;
-        }
+        try {
+          const response = await swrFetcher(href);
+          if (response && response.url) {
+            window.location.href = response.url;
+          }
+        } catch (error) {}
       }}
       className={cn(
         "flex items-center bg-secondary border border-border interact:border-primary interact:bg-secondary-hover p-3.5 text-[1.15rem] font-bold rounded-xl justify-between",
